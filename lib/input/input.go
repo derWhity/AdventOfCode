@@ -26,7 +26,7 @@ func ReadString(filename string, trim bool) ([]string, error) {
 	return out, nil
 }
 
-// ReadInt reads the puzzle input as list of integers
+// ReadInt reads the puzzle input as list of integers (int64)
 func ReadInt(filename string) ([]int64, error) {
 	var out []int64
 	items, err := ReadString(filename, true)
@@ -39,6 +39,23 @@ func ReadInt(filename string) ([]int64, error) {
 			return nil, fmt.Errorf("Failed to parse line %d: %w", i+1, err)
 		}
 		out = append(out, convertedItem)
+	}
+	return out, nil
+}
+
+// ReadIntNative reads the puzzle input as list of integers (int)
+func ReadIntNative(filename string) ([]int, error) {
+	var out []int
+	items, err := ReadString(filename, true)
+	if err != nil {
+		return nil, err
+	}
+	for i, item := range items {
+		convertedItem, err := strconv.ParseInt(item, 10, 64)
+		if err != nil {
+			return nil, fmt.Errorf("Failed to parse line %d: %w", i+1, err)
+		}
+		out = append(out, int(convertedItem))
 	}
 	return out, nil
 }
