@@ -34,11 +34,13 @@ func ReadInt(filename string) ([]int64, error) {
 		return nil, err
 	}
 	for i, item := range items {
-		convertedItem, err := strconv.ParseInt(item, 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("Failed to parse line %d: %w", i+1, err)
+		if item != "" {
+			convertedItem, err := strconv.ParseInt(item, 10, 64)
+			if err != nil {
+				return nil, fmt.Errorf("failed to parse line %d: %w", i+1, err)
+			}
+			out = append(out, convertedItem)
 		}
-		out = append(out, convertedItem)
 	}
 	return out, nil
 }
@@ -51,11 +53,13 @@ func ReadIntNative(filename string) ([]int, error) {
 		return nil, err
 	}
 	for i, item := range items {
-		convertedItem, err := strconv.ParseInt(item, 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("Failed to parse line %d: %w", i+1, err)
+		if item != "" {
+			convertedItem, err := strconv.ParseInt(item, 10, 64)
+			if err != nil {
+				return nil, fmt.Errorf("failed to parse line %d: %w", i+1, err)
+			}
+			out = append(out, int(convertedItem))
 		}
-		out = append(out, int(convertedItem))
 	}
 	return out, nil
 }
