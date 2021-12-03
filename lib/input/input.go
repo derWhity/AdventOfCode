@@ -26,6 +26,24 @@ func ReadString(filename string, trim bool) ([]string, error) {
 	return out, nil
 }
 
+func ReadNonEmptyString(filename string, trim bool) ([]string, error) {
+	input, err := ioutil.ReadFile(filepath.Join(filename))
+	if err != nil {
+		return nil, err
+	}
+	parts := strings.Split(string(input), "\n")
+	var out []string
+	for _, item := range parts {
+		if trim {
+			item = strings.TrimSpace(item)
+		}
+		if item != "" {
+			out = append(out, item)
+		}
+	}
+	return out, nil
+}
+
 // ReadInt reads the puzzle input as list of integers (int64)
 func ReadInt(filename string) ([]int64, error) {
 	var out []int64
