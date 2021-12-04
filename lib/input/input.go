@@ -44,6 +44,29 @@ func ReadNonEmptyString(filename string, trim bool) ([]string, error) {
 	return out, nil
 }
 
+// Reads blocks of string lines - a block is separated by two newlines
+func ReadBlocks(filename string, trim bool) ([][]string, error) {
+	input, err := ioutil.ReadFile(filepath.Join(filename))
+	if err != nil {
+		return nil, err
+	}
+	blocks := strings.Split(string(input), "\n\n")
+	var out [][]string
+	for _, item := range blocks {
+		var block []string
+		for _, line := range strings.Split(item, "\n") {
+			if trim {
+				line = strings.TrimSpace(line)
+			}
+			if item != "" {
+				block = append(block, line)
+			}
+		}
+		out = append(out, block)
+	}
+	return out, nil
+}
+
 // ReadInt reads the puzzle input as list of integers (int64)
 func ReadInt(filename string) ([]int64, error) {
 	var out []int64
