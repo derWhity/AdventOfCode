@@ -11,3 +11,6 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 .vscode
+
+star_01/star_01
+star_02/star_02
